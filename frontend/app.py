@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request , jsonify
 import requests, json
+import sys
 
 
 URL_API = "http://localhost:8000/users/login"
@@ -23,7 +24,11 @@ def posteo():
     "password": password,
     }
     resp = requests.post("http://localhost:8000/users/login", data=json.dumps(usuario))
-    return 'Hola ' + email + ' ' + password + ' ' + resp.text
+    # resp = requests.post("http://localhost:8000/users/login", data=usuario)
+    response = json.loads(resp.text)
+    response = response["token"]
+    print('TOKEN: ' + response, file=sys.stdout)
+    return render_template("home.html", token = str(response))
 
 
 
