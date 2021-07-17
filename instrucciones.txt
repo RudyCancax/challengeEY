@@ -1,0 +1,9 @@
+Ejecutar Backend (no entorno):
+
+
+FRONTEND
+
+Ejecutar Frontend (entorno venv):
+.\Scripts\activate
+
+flask run

@@ -15,7 +15,6 @@
 <body>
     <img class="wave" src="../static/img/wave.png">
     <div class="container">
-
         <div class="img-ey">
             <img src="../static/img/ey_challenge_logo.svg">
         </div>
@@ -42,9 +41,10 @@
                         <input type="password" name="password" class="input">
                     </div>
                 </div>
-                <input type="submit" class="btn" value="Sign In">
-                <h4 onclick="alert('clicked')">Sign Up</h4>
+                <input type="submit" onclick="notificacion()" class="btn" value="Sign In">
+                <h4>Sign Up</h4>
             </form>
+
         </div>
         <!-- FIN FORMULARIO LOGIN -->
 
@@ -54,6 +54,45 @@
 
     </div>
     <script type="text/javascript" src="../static/js/main.js"></script>
+
+    <!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script>
+        function notificacion() {
+            let errorv = '{{error}}';
+            if (errorv === '200') {
+                validation();
+                alert('VALOR 200');
+            }
+
+            if (errorv === '500') {
+                mensajeError();
+                alert('VALOR 500');
+            }
+        }
+
+        function mensajeError() {
+            swal.fire({
+                title: "Something was wrong",
+                text: "Email or password is invalid!",
+                icon: "error",
+                closeOnConfirm: false,
+            });
+        }
+
+        function validation() {
+            swal.fire({
+                title: "Bienvenido",
+                text: "Yeahhhh!",
+                icon: "success",
+                closeOnConfirm: false
+            });
+        }
+    </script> -->
+
+
+
 </body>
 
 </html>

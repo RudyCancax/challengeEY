@@ -1,4 +1,19 @@
-<H1>BIENVENIDOOOOOOOOOOOOOOOOOOOOOOOOOO</H1>
+<H1>
+    BIENVENIDOOOOOOOOOOOOOOOOOOOOOOOOOO</H1>
+{{ token }}
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     localStorage.setItem("token", "{{token}}");
+
+    function validation() {
+        swal.fire({
+            title: "Bienvenido",
+            text: "Yeahhhh!",
+            icon: "success",
+            closeOnConfirm: false
+        });
+    }
+
+    window.onload(validation());
 </script>
