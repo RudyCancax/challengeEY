@@ -146,3 +146,23 @@ func Login() gin.HandlerFunc {
 
     }
 }
+
+// method handler for get all user
+func GetAllUsersEndPoint() gin.HandlerFunc  {
+    return func(c *gin.Context) {
+        var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+    // queries for get all data user
+    var user models.User
+	var users []models.User
+	count := userCollection.Find(ctx, bson.D{{}}).All(&users)
+
+    if err := c.BindJSON(&users); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+    // print(count)
+
+    c.JSON(http.StatusOK, users)
+	// respondWithJson(w, http.StatusOK, users)
+}
+}

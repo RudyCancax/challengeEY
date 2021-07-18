@@ -4,6 +4,9 @@ Ejecutar Backend (no entorno):
 FRONTEND
 
 Ejecutar Frontend (entorno venv):
-.\Scripts\activate
+1- ACTIVAR ENTORNO
+.\Scripts\activate o 
+ & c:/entornosvirtuales/flaskenv/venv/Scripts/Activate.ps1
 
+CORRER SERVIDOR: 
 flask run
