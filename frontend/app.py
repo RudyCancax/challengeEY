@@ -43,7 +43,7 @@ def posteo():
 
 @app.route('/home', methods=['GET'])
 def home():
-    resp = requests.get( URL_API )
+    resp = requests.get( URL_API ) #Obtenemos los usuarios de la BD
     response = json.loads(resp.text)
     usuariosLocal = response
     guatemala = 0
@@ -52,6 +52,8 @@ def home():
     elsalvador = 0
     nicaragua = 0
     total = 0
+    male = 0
+    female = 0
 
     for usuario in response:
         total = total + 1
@@ -65,11 +67,16 @@ def home():
             elsalvador = elsalvador + 1
         else:
             nicaragua = nicaragua + 1
+        
+        if usuario['gender'] == 'Male':
+            male = male + 1
+        else:
+            female = female + 1
     print('GUA: ' + str(guatemala) + 'CRC: ' + str(costarica) + 'PAN: ' + str(panama) + 'SLV: ' + str(elsalvador) + 'NIC: ' + str(nicaragua) + '  TOTAL: ' + str(total), file=sys.stdout)
 
 
     # print('conteo: ' + str(response), file=sys.stdout)
-    return render_template("home.html", usuarios = usuariosLocal, editar = edit_user, usuario = usuario_editar, guatemala = guatemala, costarica = costarica, panama = panama, elsalvador = elsalvador, nicaragua = nicaragua)
+    return render_template("home.html", usuarios = usuariosLocal, editar = edit_user, usuario = usuario_editar, guatemala = guatemala, costarica = costarica, panama = panama, elsalvador = elsalvador, nicaragua = nicaragua, male = male, female = female)
 
 
 @app.route('/home', methods=['POST'])
@@ -79,50 +86,59 @@ def createUser():
         "first_name" : request.form['first_name'],
         "last_name" : request.form['last_name'],
         "email" : request.form['email'],
-        "password" : request.form['password']
+        "password" : request.form['password'],
+        "gender": request.form['dropdowngender'],
+        "country": request.form['dropdowncountry']
     }
     requests.post( URL_API, data=json.dumps(usuario))
-    # End Add new user
     return redirect(url_for("home"))
 
-@app.route('/enable-edit/<string:id>/<string:first_name>/<string:last_name>/<string:email>/<string:password>/<string:edit>')
-def enableEdit(id, first_name, last_name, email, password, edit):
+@app.route('/enable-edit/<string:id>/<string:first_name>/<string:last_name>/<string:email>/<string:password>/<string:gender>/<string:country>/<string:edit>')
+def enableEdit(id, first_name, last_name, email, password, gender, country, edit):
     global edit_user
     edit_user = edit
-    usr = usuarioaProcesar(id, first_name, last_name, email, password)
+    usr = usuarioaProcesar(id, first_name, last_name, email, password, gender, country)
     return redirect(url_for('home'))
-
-
 
 @app.route('/edit', methods=['POST'])
 def edit():
     global edit_user
     edit_user = False
-    usuarioE = usuarioaProcesar(usuario_editar['id'], request.form['first_name'], request.form['last_name'],request.form['email'], request.form['password'])
-    res = requests.put( URL_API, data=json.dumps(usuarioE))
+    usuarioE = usuarioaProcesar(usuario_editar['id'], request.form['first_name'], request.form['last_name'],request.form['email'], request.form['password'], request.form['dropdowngender'], request.form['dropdowncountry'])
+    requests.put( URL_API, data=json.dumps(usuarioE)) # User Update code
     # print('EDITADO CORRECTAMENTE:  ' +  str(usuarioE) + ' Resp: ' + res.text, file=sys.stdout)
     return redirect(url_for('home'))
 
 
-@app.route('/delete/<string:id>/<string:first_name>/<string:last_name>/<string:email>/<string:password>')
-def delete(id, first_name, last_name, email, password):
-    user = usuarioaProcesar(id, first_name, last_name, email, password)
+@app.route('/delete/<string:id>/<string:first_name>/<string:last_name>/<string:email>/<string:password>/<string:gender>/<string:country>')
+def delete(id, first_name, last_name, email, password, gender, country):
+    user = usuarioaProcesar(id, first_name, last_name, email, password, gender, country)
     res = requests.delete( URL_API, data=json.dumps(user))
     # print('ELIMIIII: ' + res.text + ' ' + str(user), file=sys.stdout)
     return redirect(url_for('home'))
 
 
-def usuarioaProcesar(id, first_name, last_name, email, password):
+@app.route('/disable-edit')
+def disableEdit():
+    global edit_user
+    edit_user = False
+    usuarioaProcesar( '', '',  '', '',  '',  '',  '')
+    return redirect(url_for('home'))
+
+
+def usuarioaProcesar(id, first_name, last_name, email, password, gender, country):
     user = {
         "id": id,
         "first_name" : first_name,
         "last_name" : last_name,
         "email" : email,
-        "password" : password
+        "password" : password,
+        "gender": gender, 
+        "country": country
     }
     global usuario_editar
     usuario_editar = user
-    # print('heyyyyyyyyyyyyyy: ' + str(usuario_editar), file=sys.stdout)
+    print('USUARIO: ' + str(usuario_editar), file=sys.stdout)
     return user
 
 @app.route('/sign-up')

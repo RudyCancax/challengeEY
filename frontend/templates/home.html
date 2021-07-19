@@ -37,11 +37,11 @@
         <!-- ===========================================================================     -->
         <!-- FORMULARIO USUARIO / INICIO  -->
         <!-- ===========================================================================     -->
-        <div class="login-content" style="margin-top: 30px;">
+        <div class="login-content" style="margin-top: 10px;">
             {% if editar == False %}
             <form action="" method="post">
                 <img src="../static/img/undraw_male_avatar_323b.svg">
-                <h2 class="title">User </h2>
+                <h2 class="title">New User </h2>
                 <div class="input-div one">
                     <div class="i">
                         <i class="fa fa-address-book" aria-hidden="true"></i>
@@ -77,6 +77,27 @@
                         <h5>Password</h5>
                         <input type="password" name="password" class="input">
                     </div>
+                </div>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fa fa-transgender" aria-hidden="true"></i>
+                    </div>
+                    <select name="dropdowngender">
+                        <option value = "Female"> Female</option>
+                        <option value = "Male" selected>Male</option>
+                    </select>
+                </div>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fa fa-globe" aria-hidden="true"></i>
+                    </div>
+                    <select name="dropdowncountry">
+                        <option value = "Guatemala"> Guatemala</option>
+                        <option value = "Costa Rica"> Costa Rica</option>
+                        <option value = "Panama"> Panamá</option>
+                        <option value = "El Salvador"> El Salvador</option>
+                        <option value = "Nicaragua"> Nicaragua</option>
+                    </select>
                 </div>
 
                 <input type="submit" class="btn" value="New User">
@@ -124,14 +145,65 @@
                         <input type="password" name="password" class="input" value="{{ usuario['password'] }}">
                     </div>
                 </div>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fa fa-transgender" aria-hidden="true"></i>
+                    </div>
+                    <select name="dropdowngender">
+                        {% if usuario['gender'] == 'Female' %}
+                            <option value = "Female" selected> Female</option>
+                            <option value = "Male">Male</option>
+                        {% else %}
+                            <option value = "Female"> Female</option>
+                            <option value = "Male" selected>Male</option>
+                        {% endif %}
+                    </select>
+                </div>
+                <div class="input-div one ">
+                    <div class="i ">
+                        <i class="fa fa-globe " aria-hidden="true "></i>
+                    </div>
+                    <select name="dropdowncountry">
+                        {% if usuario['country'] == 'Guatemala' %}
+                            <option value = "Guatemala" selected> Guatemala</option>
+                            <option value = "Costa Rica"> Costa Rica</option>
+                            <option value = "Panama"> Panamá</option>
+                            <option value = "El Salvador"> El Salvador</option>
+                            <option value = "Nicaragua"> Nicaragua</option>
+                        {% elif usuario['country'] == "Costa Rica" %}
+                            <option value = "Guatemala"> Guatemala</option>
+                            <option value = "Costa Rica" selected> Costa Rica</option>
+                            <option value = "Panama"> Panamá</option>
+                            <option value = "El Salvador"> El Salvador</option>
+                            <option value = "Nicaragua"> Nicaragua</option>
+                        {% elif usuario['country'] == "Panamá" %}
+                            <option value = "Guatemala"> Guatemala</option>
+                            <option value = "Costa Rica"> Costa Rica</option>
+                            <option value = "Panama" selected> Panamá</option>
+                            <option value = "El Salvador"> El Salvador</option>
+                            <option value = "Nicaragua"> Nicaragua</option>
+                        {% elif usuario['country'] == "El Salvador" %}
+                            <option value = "Guatemala"> Guatemala</option>
+                            <option value = "Costa Rica"> Costa Rica</option>
+                            <option value = "Panama"> Panamá</option>
+                            <option value = "El Salvador" selected> El Salvador</option>
+                            <option value = "Nicaragua"> Nicaragua</option>
+                        {% else %}
+                            <option value = "Guatemala"> Guatemala</option>
+                            <option value = "Costa Rica"> Costa Rica</option>
+                            <option value = "Panama"> Panamá</option>
+                            <option value = "El Salvador"> El Salvador</option>
+                            <option value = "Nicaragua" selected> Nicaragua</option>
+                        {% endif %}
+                    </select>
+                </div>
 
-                <!-- <a href="/edit/{{usuario['id']}}/False" class="btn"> -->
+                <!-- <a href="/edit/{{usuario[ 'id']}}/False " class="btn "> -->
                 <input type="submit" class="btn" value="Update User">
-                <!-- </a> -->
+                <a href="/disable-edit" class="mdc-button mdc-button--raised boton-users-remove">Cancel</a>
+
             </form>
-
             {% endif %}
-
 
 
         </div>
@@ -145,19 +217,19 @@
         <!-- TABLA USUARIOS / INICIO  -->
         <!-- ===========================================================================     -->
 
-        <div class="mdc-card">
+        <div class=" mdc-card ">
 
-            <div class="mdc-data-table">
-                <div class="mdc-data-table__table-container">
-                    <table class="mdc-data-table__table" aria-label="Table Users">
-                        <thead class="encabezado-tabla">
-                            <tr class="mdc-data-table__header-row">
-                                <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Full Name</th>
-                                <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">Email</th>
-                                <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Actions</th>
+            <div class="mdc-data-table ">
+                <div class="mdc-data-table__table-container ">
+                    <table class="mdc-data-table__table " aria-label="Table Users ">
+                        <thead class="encabezado-tabla ">
+                            <tr class="mdc-data-table__header-row ">
+                                <th class="mdc-data-table__header-cell " role="columnheader " scope="col ">Full Name</th>
+                                <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric " role="columnheader " scope="col ">Email</th>
+                                <th class="mdc-data-table__header-cell " role="columnheader " scope="col ">Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="mdc-data-table__content">
+                        <tbody class="mdc-data-table__content ">
 
                             <!-- ===========================================================================     -->
                             <!-- CICLO FOR / INICIO  -->
@@ -166,16 +238,18 @@
                             {% for usuario in usuarios %}
 
 
-                            <tr class="mdc-data-table__row">
-                                <th class="mdc-data-table__cell" scope="row"> {{usuario['first_name']}} {{usuario['last_name']}}</th>
-                                <td class="mdc-data-table__cell mdc-data-table__cell--numeric"> {{usuario['email']}}</td>
-                                <td class="mdc-data-table__cell mdc-data-table__cell--numeric"> {{usuario['country']}}</td>
+                            <tr class="mdc-data-table__row ">
+                                <th class="mdc-data-table__cell " scope="row "> {{usuario['first_name']}} {{usuario['last_name']}}</th>
+                                <td class="mdc-data-table__cell mdc-data-table__cell--numeric "> {{usuario['email']}}</td>
+                                <td class="mdc-data-table__cell mdc-data-table__cell--numeric "> {{usuario['country']}}</td>
 
-                                <td class="mdc-data-table__cell">
-                                    <a href="/enable-edit/{{usuario['id']}}/{{usuario['first_name']}}/{{usuario['last_name']}}/{{usuario['email']}}/{{usuario['password']}}/true" class="mdc-button mdc-button--raised boton-users-edit">Edit</a>
+                                <td class="mdc-data-table__cell ">
+                                    <a href="/enable-edit/{{usuario[ 'id']}}/{{usuario[ 'first_name']}}/{{usuario[ 'last_name']}}/{{usuario[ 'email']}}/{{usuario[ 'password']}}/{{usuario[ 'gender']}}/{{usuario[ 'country']}}/true " class="mdc-button
+                    mdc-button--raised boton-users-edit ">Edit</a>
                                 </td>
-                                <td class="mdc-data-table__cell">
-                                    <a href="/delete/{{usuario['id']}}/{{usuario['first_name']}}/{{usuario['last_name']}}/{{usuario['email']}}/{{usuario['password']}}" class="mdc-button mdc-button--raised boton-users-remove">delete</a>
+                                <td class="mdc-data-table__cell ">
+                                    <a href="/delete/{{usuario[ 'id']}}/{{usuario[ 'first_name']}}/{{usuario[ 'last_name']}}/{{usuario[ 'email']}}/{{usuario[ 'password']}}/{{usuario[ 'gender']}}/{{usuario[ 'country']}} " class="mdc-button mdc-button--raised
+                    boton-users-remove ">delete</a>
                                 </td>
 
                             </tr>
@@ -201,42 +275,56 @@
 
     </div>
 
-    <div class="chart-container" style="margin-top: -200px; margin-left: 100px; height:30vh; width:40vw;">
-        <canvas id="myChart"></canvas>
+
+    <div class="chart-container" style="position: relative; height:30vh; width:40vw; margin-top: -50px; margin-left: 50px; ">
+        <canvas id="chartCountries" width="400" height="400"></canvas>
     </div>
 
-    <!-- CICLO FOR -->
-    <!-- {% for usuario in usuarios %} {{usuario['first_name']}} {% endfor %} -->
+    <div class="chart-container" style="position: relative; height:30vh; width:40vw; margin-top: 500px; margin-left: 50px; ">
+        <canvas id="chartGender"></canvas>
+    </div>
+
+    <!-- <canvas id="chartCountries " width="400 " height="400 "></canvas> -->
+
+    <!-- <canvas id="myChartCountries" width="400" height="400"></canvas> -->
+
+    <!-- <div class="chart-container" style="position: relative; height:30vh; width:40vw; margin-top: 500px; margin-left: 50px; ">
+        <canvas id="myChartGender" width="400" height="400"></canvas>
+    </div> -->
 
 
     <script>
         let a = 0;
         let paises = ['Guatemala', 'Costa Rica', 'Panamá', 'El Salvador', 'Nicaragua'];
         let countpaises = [];
-        let usuarios = '{{usuarios}}';
-        // let usuariosj = JSON.parse(usuarios);
 
-        // console.log("PRUEBA");
-        // console.log("{{usuarios.0['country']}}");
-        // console.log(typeof(usuariosj));
+        let generos = ['Male', 'Female'];
 
-        guatemala = parseInt('{{guatemala}}');
+
+        // guatemala = parseInt('{{guatemala}}');
 
         countpaises[0] = parseInt('{{guatemala}}');
         countpaises[1] = parseInt('{{costarica}}');
         countpaises[2] = parseInt('{{panama}}');
         countpaises[3] = parseInt('{{elsalvador}}');
         countpaises[4] = parseInt('{{nicaragua}}');
+        let male = parseInt('{{male}}');
+        let female = parseInt('{{female}}');
+        let totalGeneros = [male, female];
+        total = male + female;
 
         console.log(countpaises);
 
-        var ctx = document.getElementById('myChart');
-        var myChart = new Chart(ctx, {
+
+        // COUNTRIES GRAPH
+
+        var ctxc = document.getElementById('chartCountries').getContext('2d');
+        var chartCountries = new Chart(ctxc, {
             type: 'pie',
             data: {
                 labels: paises,
                 datasets: [{
-                    label: '# of Votes',
+                    label: 'total of Votes',
                     data: countpaises,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.5)',
@@ -244,6 +332,7 @@
                         'rgba(255, 206, 86, 0.5)',
                         'rgba(75, 192, 192, 0.5)',
                         'rgba(153, 102, 255, 0.5)',
+                        'rgba(255, 159, 64, 0.5)'
                     ],
                     borderColor: [
                         'rgba(255, 99, 132, 1)',
@@ -251,6 +340,7 @@
                         'rgba(255, 206, 86, 1)',
                         'rgba(75, 192, 192, 1)',
                         'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
                     ],
                     borderWidth: 1
                 }]
@@ -263,6 +353,39 @@
                 }
             }
         });
+
+        // END COUNTRIES GRAPH
+
+        // START GENDER graph
+        var ctxg = document.getElementById('chartGender').getContext('2d');
+        var chartGender = new Chart(ctxg, {
+            type: 'bar',
+            data: {
+                labels: ['Male', 'Female'],
+                datasets: [{
+                    label: total + ' Users',
+                    data: [male, female],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        // END GENDER GRAPH
     </script>
 
 
@@ -270,21 +393,4 @@
 </main>
 
 
-
-
-<!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    localStorage.setItem("token", "{{token}}");
-
-    function validation() {
-        swal.fire({
-            title: "Bienvenido",
-            text: "Yeahhhh!",
-            icon: "success",
-            closeOnConfirm: false
-        });
-    }
-
-    window.onload(validation());
-</script> -->
 {% endblock %}
