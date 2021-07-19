@@ -226,6 +226,8 @@
                             <tr class="mdc-data-table__header-row ">
                                 <th class="mdc-data-table__header-cell " role="columnheader " scope="col ">Full Name</th>
                                 <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric " role="columnheader " scope="col ">Email</th>
+                                <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric " role="columnheader " scope="col ">Gender</th>
+                                <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric " role="columnheader " scope="col ">Country</th>
                                 <th class="mdc-data-table__header-cell " role="columnheader " scope="col ">Actions</th>
                             </tr>
                         </thead>
@@ -241,6 +243,7 @@
                             <tr class="mdc-data-table__row ">
                                 <th class="mdc-data-table__cell " scope="row "> {{usuario['first_name']}} {{usuario['last_name']}}</th>
                                 <td class="mdc-data-table__cell mdc-data-table__cell--numeric "> {{usuario['email']}}</td>
+                                <td class="mdc-data-table__cell mdc-data-table__cell--numeric "> {{usuario['gender']}}</td>
                                 <td class="mdc-data-table__cell mdc-data-table__cell--numeric "> {{usuario['country']}}</td>
 
                                 <td class="mdc-data-table__cell ">
@@ -310,8 +313,9 @@
         countpaises[4] = parseInt('{{nicaragua}}');
         let male = parseInt('{{male}}');
         let female = parseInt('{{female}}');
-        let totalGeneros = [male, female];
-        total = male + female;
+        let othergender = parseInt('{{othergender}}');
+        let totalGeneros = [male, female, othergender];
+        total = male + female + othergender;
 
         console.log(countpaises);
 
@@ -361,18 +365,20 @@
         var chartGender = new Chart(ctxg, {
             type: 'bar',
             data: {
-                labels: ['Male', 'Female'],
+                labels: ['Male', 'Female', 'Other'],
                 datasets: [{
                     label: total + ' Users',
-                    data: [male, female],
+                    data: [male, female, othergender],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.6)',
                         'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.5)',
 
                     ],
                     borderColor: [
                         'rgba(255, 99, 132, 1)',
                         'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
                     ],
                     borderWidth: 1
                 }]

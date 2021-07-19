@@ -54,6 +54,7 @@ def home():
     total = 0
     male = 0
     female = 0
+    othergender = 0
 
     for usuario in response:
         total = total + 1
@@ -70,13 +71,15 @@ def home():
         
         if usuario['gender'] == 'Male':
             male = male + 1
-        else:
+        elif usuario['gender'] == 'Female':
             female = female + 1
+        else:
+            othergender = othergender + 1
     print('GUA: ' + str(guatemala) + 'CRC: ' + str(costarica) + 'PAN: ' + str(panama) + 'SLV: ' + str(elsalvador) + 'NIC: ' + str(nicaragua) + '  TOTAL: ' + str(total), file=sys.stdout)
 
 
     # print('conteo: ' + str(response), file=sys.stdout)
-    return render_template("home.html", usuarios = usuariosLocal, editar = edit_user, usuario = usuario_editar, guatemala = guatemala, costarica = costarica, panama = panama, elsalvador = elsalvador, nicaragua = nicaragua, male = male, female = female)
+    return render_template("home.html", usuarios = usuariosLocal, editar = edit_user, usuario = usuario_editar, guatemala = guatemala, costarica = costarica, panama = panama, elsalvador = elsalvador, nicaragua = nicaragua, male = male, female = female, othergender = othergender)
 
 
 @app.route('/home', methods=['POST'])
