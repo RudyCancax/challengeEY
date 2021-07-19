@@ -87,7 +87,7 @@
 
             <form action="/edit" method="POST">
                 <img src="../static/img/undraw_male_avatar_323b.svg">
-                <h2 class="title">Update User {{ editar }} </h2>
+                <h2 class="title">Update User </h2>
                 <div class="input-div one">
                     <div class="i">
                         <i class="fa fa-address-book" aria-hidden="true"></i>
@@ -132,7 +132,11 @@
 
             {% endif %}
 
+
+
         </div>
+
+
         <!-- ===========================================================================     -->
         <!-- FORMULARIO USUARIO / FIN  -->
         <!-- ===========================================================================     -->
@@ -142,7 +146,6 @@
         <!-- ===========================================================================     -->
 
         <div class="mdc-card">
-            <!-- ... content ... -->
 
             <div class="mdc-data-table">
                 <div class="mdc-data-table__table-container">
@@ -161,9 +164,12 @@
                             <!-- ===========================================================================     -->
 
                             {% for usuario in usuarios %}
+
+
                             <tr class="mdc-data-table__row">
                                 <th class="mdc-data-table__cell" scope="row"> {{usuario['first_name']}} {{usuario['last_name']}}</th>
                                 <td class="mdc-data-table__cell mdc-data-table__cell--numeric"> {{usuario['email']}}</td>
+                                <td class="mdc-data-table__cell mdc-data-table__cell--numeric"> {{usuario['country']}}</td>
 
                                 <td class="mdc-data-table__cell">
                                     <a href="/enable-edit/{{usuario['id']}}/{{usuario['first_name']}}/{{usuario['last_name']}}/{{usuario['email']}}/{{usuario['password']}}/true" class="mdc-button mdc-button--raised boton-users-edit">Edit</a>
@@ -190,11 +196,74 @@
         <!-- ===========================================================================     -->
 
 
+
+
+
+    </div>
+
+    <div class="chart-container" style="margin-top: -200px; margin-left: 100px; height:30vh; width:40vw;">
+        <canvas id="myChart"></canvas>
     </div>
 
     <!-- CICLO FOR -->
     <!-- {% for usuario in usuarios %} {{usuario['first_name']}} {% endfor %} -->
 
+
+    <script>
+        let a = 0;
+        let paises = ['Guatemala', 'Costa Rica', 'Panamá', 'El Salvador', 'Nicaragua'];
+        let countpaises = [];
+        let usuarios = '{{usuarios}}';
+        // let usuariosj = JSON.parse(usuarios);
+
+        // console.log("PRUEBA");
+        // console.log("{{usuarios.0['country']}}");
+        // console.log(typeof(usuariosj));
+
+        guatemala = parseInt('{{guatemala}}');
+
+        countpaises[0] = parseInt('{{guatemala}}');
+        countpaises[1] = parseInt('{{costarica}}');
+        countpaises[2] = parseInt('{{panama}}');
+        countpaises[3] = parseInt('{{elsalvador}}');
+        countpaises[4] = parseInt('{{nicaragua}}');
+
+        console.log(countpaises);
+
+        var ctx = document.getElementById('myChart');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: paises,
+                datasets: [{
+                    label: '# of Votes',
+                    data: countpaises,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 206, 86, 0.5)',
+                        'rgba(75, 192, 192, 0.5)',
+                        'rgba(153, 102, 255, 0.5)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 
 
 
@@ -218,5 +287,4 @@
 
     window.onload(validation());
 </script> -->
-
 {% endblock %}

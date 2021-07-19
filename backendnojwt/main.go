@@ -93,6 +93,21 @@ func DeleteUserEndPoint(w http.ResponseWriter, r *http.Request) {
 	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
 }
 
+
+
+// method handler for get user by id
+func GetUserByEmailEndPoint(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r) // mux library to get all parameters
+	user, err := dao.Login(params["email"])
+	if err != nil { // data not found
+		respondWithError(w, http.StatusBadRequest, "Invalid User Email")
+		return
+	}
+	respondWithJson(w, http.StatusOK, user)
+}
+
+
+
 // init the connection
 // Parse the configuration file 'config.toml', and establish a connection to DB
 func init() {
@@ -112,6 +127,7 @@ func main() {
 	r.HandleFunc("/users", CreateUserEndPoint).Methods("POST")      // call post method to create user
 	r.HandleFunc("/users", UpdateUserEndPoint).Methods("PUT")       // call put method to edit the user
 	r.HandleFunc("/users", DeleteUserEndPoint).Methods("DELETE")    // call delete method to delete the user
+	r.HandleFunc("/login/{email}", GetUserByEmailEndPoint).Methods("POST")      // call post method to login
 
 	port := ":8080" // port for run the app
 

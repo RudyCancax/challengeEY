@@ -44,6 +44,7 @@ func (m *UsersDAO) FindUserById(id string) (User, error) {
 	return user, err
 }
 
+
 // query to post user
 func (m *UsersDAO) Insert(user User) error {
 	err := db.C(COLLECTION).Insert(&user)
@@ -60,4 +61,12 @@ func (m *UsersDAO) Update(user User) error {
 func (m *UsersDAO) Delete(user User) error {
 	err := db.C(COLLECTION).Remove(user)
 	return err
+}
+
+
+
+func (m *UsersDAO) Login(email string) (User, error) {
+		var user User
+		err := db.C(COLLECTION).Find(bson.ObjectIdHex(email)).One(&user) // get one data by id
+		return user, err
 }

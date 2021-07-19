@@ -46,8 +46,30 @@ def home():
     resp = requests.get( URL_API )
     response = json.loads(resp.text)
     usuariosLocal = response
-    # print('heyyyyyyyyyyyyyy: ' + str(usuario_editar), file=sys.stdout)
-    return render_template("home.html", usuarios = usuariosLocal, editar = edit_user, usuario = usuario_editar)
+    guatemala = 0
+    costarica = 0
+    panama = 0
+    elsalvador = 0
+    nicaragua = 0
+    total = 0
+
+    for usuario in response:
+        total = total + 1
+        if usuario['country'] == 'Guatemala':
+            guatemala = guatemala + 1
+        elif usuario['country'] == 'Costa Rica':
+            costarica = costarica + 1
+        elif usuario['country'] == 'Panama':
+            panama = panama + 1
+        elif usuario['country'] == 'El Salvador':
+            elsalvador = elsalvador + 1
+        else:
+            nicaragua = nicaragua + 1
+    print('GUA: ' + str(guatemala) + 'CRC: ' + str(costarica) + 'PAN: ' + str(panama) + 'SLV: ' + str(elsalvador) + 'NIC: ' + str(nicaragua) + '  TOTAL: ' + str(total), file=sys.stdout)
+
+
+    # print('conteo: ' + str(response), file=sys.stdout)
+    return render_template("home.html", usuarios = usuariosLocal, editar = edit_user, usuario = usuario_editar, guatemala = guatemala, costarica = costarica, panama = panama, elsalvador = elsalvador, nicaragua = nicaragua)
 
 
 @app.route('/home', methods=['POST'])
